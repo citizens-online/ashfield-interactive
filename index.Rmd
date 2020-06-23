@@ -1,0 +1,109 @@
+---
+title: "Digital Inclusion in Ashfield district"
+output: 
+  flexdashboard::flex_dashboard:
+    storyboard: true
+    theme: cosmo
+    css: co_flex.css
+    favicon: favicon.png
+mainfont: Source Sans Pro
+---
+
+```{r setup, include=FALSE}
+
+library(here)
+library(dplyr)
+library(flexdashboard)
+library(leaflet)
+library(stringr)
+library(tmap)
+
+full_data <- readRDS(here("rds_data/full_data.Rds"))
+digitypes_sf <- readRDS(here("rds_data/digitypes_sf.Rds"))
+community_sf <- readRDS(here("rds_data/community_sf.Rds"))
+ofcom_data_sf <- readRDS(here("rds_data/ofcom_data_sf.Rds"))
+ward_boundaries <- readRDS(here("rds_data/ward_boundaries.Rds"))
+district_boundary <- readRDS(here("rds_data/district_boundary.Rds"))
+
+star_icon <- tmap_icons(here("star_fill.png"), width = 24, height = 24)
+
+```
+
+### Areas of Ashfield district with higher digital exclusion risk related to age. Digital exclusion risk is particuarly acute where older people are living alone and/or are poorer. Specific numbers can be seen in a pop-up when you click on an area. Layers may be turned on and off using the layers tool at the top left.
+
+
+```{r over65_tmap}
+
+tmap_mode("view")
+tmap_options(basemaps = leaflet::providers$CartoDB.Positron,
+             fontfamily = "Source Sans Pro")
+
+full_data_age <- full_data %>% 
+  mutate(
+    over65_pct = round(
+      100*over65_population/(working_age_population+over65_population), 1
+      )
+    ) %>% 
+  mutate(over65_pcts = paste0(over65_pct, "%")) %>% 
+  mutate_at(vars(lsoa11nm), ~ str_replace(., "^Ashfield ", "")) %>% 
+  select(lsoa11nm, over65_population, wd19nm, over65_pct, over65_pcts, one_person_household_aged_65_and_over, pc_aug_19)
+
+age_map <- tm_shape(full_data_age, name = "Age by LSOA (%)") +
+      tm_polygons("over65_pct",
+              title = "% adult population aged 65+",
+              alpha = 0.6,
+              border.col = "grey50",
+              border.alpha = 0.6,
+              lwd = 1,
+              palette = "Purples",
+              style = "log10",
+              popup.vars = c("Ward" = "wd19nm",
+                             "% adult popn. aged 65+" = "over65_pct",
+                             "Popn. aged 65+" = "over65_population",
+                             "Older people living alone" = "one_person_household_aged_65_and_over",
+                             "Pension Credit claim hotspots" = "pc_aug_19")
+              ) +
+    # tm_text("over65_population", size = 1, col = "grey22") +
+  
+  tm_shape(full_data_age, name = "Older people living alone") +
+    tm_polygons("one_person_household_aged_65_and_over",
+                title = "People aged 65+ living alone",
+                alpha = 0.5,
+                border.col = "grey50",
+                border.alpha = 0.5,
+                lwd = 1,
+                palette = "Purples",
+                style = "log10",
+                popup.vars = c("Ward" = "wd19nm",
+                             "% adult popn. aged 65+" = "over65_pct",
+                             "Popn. aged 65+" = "over65_population",
+                             "Older people living alone" = "one_person_household_aged_65_and_over",
+                             "Pension Credit claim hotspots" = "pc_aug_19")
+                ) +
+  
+  tm_shape(dplyr::slice_max(full_data_age, order_by = pc_aug_19, n = 5), name = "Pension Credit claims ") +
+    tm_borders(col = "deeppink", lwd = 2, alpha = 0.7) +
+  
+  tm_shape(district_boundary, name = "District boundary") +
+    tm_borders(col = "lawngreen", lwd = 4, alpha = 0.5, group = NA) +
+  
+  tm_shape(select(ward_boundaries, wd19nm), name = "Ward boundaries") +
+    tm_polygons(alpha = 0,
+                  border.col = "gold1", lwd = 2, border.alpha = 0.2, popup.vars = FALSE) +
+
+  tm_shape(community_sf, name = "Community assets") +
+    tm_markers(shape = star_icon, popup.vars = "type")
+
+tmap_leaflet(age_map) %>% 
+  leaflet::hideGroup(c("Population aged 65+", "Ward boundaries", "Community assets"))
+
+```
+
+***
+
+Some LSOAs in the north of the district have high proportions of older residents, particularly in Skegby ward and in Stanton Hill & Teversal. In the south, the village of Underwood and one area in Hucknall North also have relatively old populations. When the map of community assets is overlaid, we can see that these areas are also not well served by community centres or halls.
+
+While age is generally associated with digital exclusion, particular groups of older people are even more likely to be excluded - those who live alone and those who are poorer.
+
+When we examine the distribution of older people living alone, we find a different pattern, with these being more likely to live in the towns, especially in Sutton and in the centre of Hucknall, as well as in Kirkby (Summit and Kingsway wards). The highest numbers of Pension Credit claimants (poorer older people) are found in the same areas. (The 5 LSOAs bordered with pink are those with the highest numbers of Pension Credit claimants.) Being more urban, these areas have community centres and potential support venues not too far away, but very few actually in the highest-risk LSOAs themselves.
+
