@@ -1,6 +1,8 @@
 ---
 title: "Digital Inclusion in Ashfield district"
-author: Citizens Online (2020)
+subtitle: "Maps to accompany the Findings and Recommendations report to Ashfield District Council (June 2020)"
+date: "June 2020"
+author: "Citizens Online"
 output: 
   flexdashboard::flex_dashboard:
     storyboard: true
