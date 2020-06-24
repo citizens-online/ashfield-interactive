@@ -108,7 +108,7 @@ tmap_leaflet(age_map) %>%
 When the map of community assets is overlaid, we can see that these areas are also not well served by community centres or halls.
 * While age is generally associated with digital exclusion, particular groups of older people are even more likely to be excluded - those who live alone and those who are poorer.
 * When we examine the distribution of older people living alone, we find a different pattern, with these being more likely to live in the towns, especially in Sutton and in the centre of Hucknall, as well as in Kirkby (**Summit** and **Kingsway** wards).
-* The highest numbers of Pension Credit claimants (poorer older people) are found in the same areas.
+* The highest numbers of Pension Credit claimants (poorer, older people) are found in the same areas.
 (The 5 LSOAs bordered with pink are those with the highest numbers of Pension Credit claimants.)
 Being more urban, these areas have community centres and potential support venues not too far away, but very few actually in the highest-risk LSOAs themselves.
 * Sources:
@@ -175,10 +175,10 @@ tmap_leaflet(disab_map) %>%
 * While there are significant numbers of disabled people in every LSOA, the highest numbers are found particularly in Sutton (in **Carsic** and **Leamington** wards) and to a lesser extent in Kirkby (**Summit** and **Abbey Hill** wards).
 * When the community assets layer is overlaid, we can see that in a few areas such as **Abbey Hill** and in the southern part of **Leamington** ward, there are very few or no places where disabled residents might be able to access digital skills support within their neighbourhood.
 * The data shown here incorporates claims data from the DWP ([StatXplore][statx]) for the disability-related benefits DLA, ESA and PIP.
-The claimant numbers are summed together here, but these benefits are not all mutually exclusive, so the figures must be taken as approximations.
-Additionally, not all who are disabled in a way that limits their day-to-day activities may be claiming one of these benefits.
+The claimant numbers are summed together here, but these benefits are not mutually exclusive, so the figures must be taken as approximations.
+Additionally, not everyone who is disabled in a way that limits their day-to-day activities may be claiming one of these benefits.
 * The [2019 English Indices of Deprivation][eimd] includes an index of health and disability deprivation, where LSOAs are scored and ranked nationally.
-Those LSOAs in Ashfield within the 10% most deprived in this index are highlighted, for comparison (n = 10).
+Those LSOAs in Ashfield within the 10% most deprived on this index are highlighted, for comparison (n = 10).
 * Among these, three LSOAs (in **Huthwaite & Brierley**, **Central & New Cross**, and **Skegby**) are found outside the three target wards identified by the Citizens Online analysis.
 * These areas may therefore have increased digital inclusion needs, and venues such as the nearby Huthwaite, Sutton and Skegby libraries (respectively), and for example New Cross Community Church, may be able to host digital support sessions with specific support for disabled residents.
 * Sources:
@@ -309,11 +309,11 @@ tmap_leaflet(heatmap) %>%
 
 ***
 
-* This map illustrates the *relative*, overall digital exclusion risk at ward level in Ashfield. There are significant variations between areas within wards in terms of risk and in terms of residents' ability to access any support provided locally. **Leamington** ward is an example where digital exclusion risk factors are highly concentrated in some parts, with risk being considerably lower in other areas.
-* Likewise, wards that are not ranked as high-risk overall will still have numbers of people who are digitally excluded. These residents may be spread around the area or found in more concentrated pockets. An example of this is **Abbey Hill** ward, where some parts are at high risk even though the ward as a whole is at moderate risk.
+* This map illustrates the *relative*, overall digital exclusion risk at ward level in Ashfield. There are significant variations between areas within wards in terms of risk and in terms of the accessibility of local support options. **Leamington** ward is an example where digital exclusion risk factors are highly concentrated in some parts, with risk being considerably lower in other areas.
+* Likewise, wards not ranked as high-risk overall will still have numbers of people who are digitally excluded. These residents may be spread around the area, or found in more concentrated pockets. An example of this is **Abbey Hill** ward, where some parts are at high risk even though the ward as a whole is at moderate risk.
 * The community assets layer shows which areas are best served by local services and potential community support venues, and where there are gaps.
-* The Ashfield District Council DigiTypes classification has been used here as an overlay. Those postcodes categorised as "DigiNo" - with residents least likely to access services digitally - are shown as white dots. The spread of these postcodes across the district emphasises the point that digitally excluded residents are found in all areas, not just in the urban "hotspots".
-* **NB** LSOA boundaries and ward boundaries in Ashfield do not always match up. Each LSOA is allocated to a ward by the ONS using a "best fit" process, which means the data we obtain at LSOA level sometimes includes some streets that are not actually within the area's allocated ward. The converse is of course also true: wards include parts of LSOAs that are *not* matched to them via the best fit process.
+* The Ashfield District Council DigiTypes classification has been included here as an overlay. Those postcodes categorised as "DigiNo" - with residents least likely to access services digitally - are shown as white dots. The spread of these postcodes across the district emphasises the point that digitally excluded residents are found in all areas, not just in the urban "hotspots".
+* **NB** LSOA boundaries and ward boundaries in Ashfield do not always match up. Each LSOA is allocated to a ward by the ONS using a "best fit" process, which means the data we obtain at LSOA level sometimes includes some streets that are not actually within the allocated ward.
 * Sources:
   * Ashfield District Council DigiTypes research
   * [ONS Postcode Directory][ons_pc]
