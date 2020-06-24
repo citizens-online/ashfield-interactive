@@ -1,11 +1,13 @@
 ---
 title: "Digital Inclusion in Ashfield district"
+author: Citizens Online (2020)
 output: 
   flexdashboard::flex_dashboard:
     storyboard: true
-    theme: cosmo
+    theme: flatly
     css: co_flex.css
     favicon: favicon.png
+    logo: icon_white.png
 mainfont: Source Sans Pro
 ---
 
@@ -15,6 +17,7 @@ library(here)
 library(dplyr)
 library(flexdashboard)
 library(leaflet)
+library(readr)
 library(stringr)
 library(tmap)
 
@@ -32,7 +35,7 @@ tmap_options(basemaps = leaflet::providers$CartoDB.Positron,
 
 ```
 
-### Areas of Ashfield district with higher digital exclusion risk related to age. Digital exclusion risk is particuarly acute where older people are living alone and/or are poorer. Specific numbers can be seen in a pop-up when you click on an area. Layers may be turned on and off using the layers tool at the top left.
+### **Age and digital exclusion.** Digital exclusion risk is particularly acute where older people are living alone and/or are poorer. Specific numbers can be seen in a pop-up when you click on an area. Layers may be turned on and off using the layers tool at the top left.
 
 
 ```{r over65_tmap}
@@ -62,7 +65,6 @@ age_map <- tm_shape(full_data_age, name = "Age by LSOA (%)") +
                              "Older people living alone" = "one_person_household_aged_65_and_over",
                              "Pension Credit claim hotspots" = "pc_aug_19")
               ) +
-    # tm_text("over65_population", size = 1, col = "grey22") +
   
   tm_shape(full_data_age, name = "Older people living alone") +
     tm_polygons("one_person_household_aged_65_and_over",
@@ -84,7 +86,7 @@ age_map <- tm_shape(full_data_age, name = "Age by LSOA (%)") +
     tm_borders(col = "deeppink", lwd = 2, alpha = 0.7) +
   
   tm_shape(district_boundary, name = "District boundary") +
-    tm_borders(col = "lawngreen", lwd = 4, alpha = 0.5, group = NA) +
+    tm_borders(col = "lawngreen", lwd = 4, alpha = 0.5) +
   
   tm_shape(select(ward_boundaries, wd19nm), name = "Ward boundaries") +
     tm_borders(col = "gold1", lwd = 2, alpha = 0.2) +
@@ -99,19 +101,17 @@ tmap_leaflet(age_map) %>%
 
 ***
 
-Some LSOAs in the north of the district have high proportions of older residents, particularly in Skegby ward and in Stanton Hill & Teversal.
-In the south, the village of Underwood and one area in Hucknall North also have relatively old populations.
+* Some LSOAs in the north of the district have high proportions of older residents, particularly in Skegby ward and in Stanton Hill & Teversal.
+* In the south, the village of Underwood and one area in Hucknall North also have relatively old populations.
 When the map of community assets is overlaid, we can see that these areas are also not well served by community centres or halls.
-
-While age is generally associated with digital exclusion, particular groups of older people are even more likely to be excluded - those who live alone and those who are poorer.
-
-When we examine the distribution of older people living alone, we find a different pattern, with these being more likely to live in the towns, especially in Sutton and in the centre of Hucknall, as well as in Kirkby (Summit and Kingsway wards).
-The highest numbers of Pension Credit claimants (poorer older people) are found in the same areas.
+* While age is generally associated with digital exclusion, particular groups of older people are even more likely to be excluded - those who live alone and those who are poorer.
+* When we examine the distribution of older people living alone, we find a different pattern, with these being more likely to live in the towns, especially in Sutton and in the centre of Hucknall, as well as in Kirkby (Summit and Kingsway wards).
+* The highest numbers of Pension Credit claimants (poorer older people) are found in the same areas.
 (The 5 LSOAs bordered with pink are those with the highest numbers of Pension Credit claimants.)
 Being more urban, these areas have community centres and potential support venues not too far away, but very few actually in the highest-risk LSOAs themselves.
 
 
-### Areas of Ashfield district with higher digital exclusion risk related to disability. Disabled people are %%% less likely to be online than non-disabled people. We estimate the disabled population in an area by using claimant numbers for various disability-related benefits (DLA, ESA, PIP). Layers may be turned on and off using the layers tool at the top left.
+### **Disability and digital exclusion.** Disabled people are much less likely to be online than non-disabled people. We estimate the disabled population in an area by using claimant numbers for three disability-related benefits (DLA, ESA, PIP). Layers may be turned on and off using the layers tool at the top left.
 
 
 ```{r disability_tmap}
@@ -140,13 +140,12 @@ disab_map <- tm_shape(full_data_dis, name = "Disability prevalence (% popn) (app
                              "Adults receiving disability benefits (approx.)" = "comb_disability",
                              "HDD Decile" = "HDDDec")
               ) +
-    # tm_text("over65_population", size = 1, col = "grey22") +
-  
-  tm_shape(filter(full_data_dis, HDDDec %in% 1), name = "LSOAs with highest Health & Disability Deprivation") +
+
+    tm_shape(filter(full_data_dis, HDDDec %in% 1), name = "LSOAs with highest Health & Disability Deprivation") +
     tm_borders(col = "deeppink", lwd = 2, alpha = 0.4) +
   
   tm_shape(district_boundary, name = "District boundary") +
-    tm_borders(col = "lawngreen", lwd = 4, alpha = 0.5, group = NA) +
+    tm_borders(col = "lawngreen", lwd = 4, alpha = 0.5) +
   
   tm_shape(select(ward_boundaries, wd19nm), name = "Ward boundaries") +
     tm_borders(col = "gold1", lwd = 2, alpha = 0.2) +
@@ -161,19 +160,15 @@ tmap_leaflet(disab_map) %>%
 
 ***
 
-While there are significant numbers of disabled people in every LSOA, the highest numbers are found particularly in Sutton (in Carsic and Leamington wards) and to a lesser extent in Kirkby (Summit and Abbey Hill wards).
-
-When the community assets layer is overlaid, we can see that in a few areas such as Abbey Hill and in the southern part of Leamington ward, there are very few or no places where disabled residents might be able to access digital skills support within their neighbourhood.
-
-The data shown here incorporates claims data from the DWP ([StatXplore][statx]) for the disability-related benefits DLA, ESA and PIP.
+* While there are significant numbers of disabled people in every LSOA, the highest numbers are found particularly in Sutton (in Carsic and Leamington wards) and to a lesser extent in Kirkby (Summit and Abbey Hill wards).
+* When the community assets layer is overlaid, we can see that in a few areas such as Abbey Hill and in the southern part of Leamington ward, there are very few or no places where disabled residents might be able to access digital skills support within their neighbourhood.
+* The data shown here incorporates claims data from the DWP ([StatXplore][statx]) for the disability-related benefits DLA, ESA and PIP.
 The claimant numbers are summed together here, but these benefits are not all mutually exclusive, so the figures must be taken as approximations.
 Additionally, not all who are disabled in a way that limits their day-to-day activities may be claiming one of these benefits.
-
-The [2019 English Indices of Deprivation][eimd] includes an index of health and disability deprivation, where LSOAs are scored and ranked nationally.
+* The [2019 English Indices of Deprivation][eimd] includes an index of health and disability deprivation, where LSOAs are scored and ranked nationally.
 Those LSOAs in Ashfield within the 10% most deprived in this index are highlighted, for comparison (n = 10).
-
-Among these, three LSOAs (in Huthwaite & Brierley, Central & New Cross, and Skegby) are found outside the three target wards identified by the Citizens Online analysis.
-These areas may therefore have above-average digital inclusion needs, and places such as the nearby (respectively) Huthwaite, Sutton and Skegby libraries and New Cross Community Church may be able to host digital support sessions for residents.
+* Among these, three LSOAs (in Huthwaite & Brierley, Central & New Cross, and Skegby) are found outside the three target wards identified by the Citizens Online analysis.
+* These areas may therefore have above-average digital inclusion needs, and venues such as the nearby Huthwaite, Sutton and Skegby (respectively) libraries, and for example New Cross Community Church, may be able to host digital support sessions with specific support for disabled residents.
 
 [eimd]: https://www.gov.uk/government/statistics/english-indices-of-deprivation-2019
 [statx]: https://stat-xplore.dwp.gov.uk/
@@ -181,7 +176,7 @@ These areas may therefore have above-average digital inclusion needs, and places
 
 
 
-### This map shows the number of Housing Benefit and Universal Credit claimants for each LSOA, as a rough measure of income deprivation. Data from Ofcom showing postcodes where some or all premises cannot access Superfast broadband is overlaid, with the size of the dot representing the number of premises affected.
+### **Low income and digital exclusion.** This map shows the number of Housing Benefit and Universal Credit claimants for each LSOA, as a rough measure of income deprivation. Data from Ofcom showing postcodes where some or all premises cannot access Superfast broadband is overlaid, where a larger dot represents a higher % of premises affected in each postcode. Layers may be turned on and off using the layers tool at the top left.
 
 
 ```{r income_tmap}
@@ -214,7 +209,7 @@ incom_map <- tm_shape(full_data_inc, name = "Income deprivation prevalence (% ad
               ) +
   
   tm_shape(district_boundary, name = "District boundary") +
-    tm_borders(col = "lawngreen", lwd = 4, alpha = 0.5, group = NA) +
+    tm_borders(col = "lawngreen", lwd = 4, alpha = 0.5) +
   
   tm_shape(select(ward_boundaries, wd19nm), name = "Ward boundaries") +
     tm_borders(col = "gold1", lwd = 2, alpha = 0.2) +
@@ -232,8 +227,65 @@ tmap_leaflet(incom_map) %>%
 
 ***
 
-The highest numbers of people on lower incomes, as represented by HB and UC claims, are found within areas of Leamington, Summit, Central & New Cross, Abbey Hill and Carsic wards. None of these LSOAs has a significant problem with lack of broadband connectivity.
+* The highest numbers of people on lower incomes, as represented by HB and UC claims, are found within areas of Leamington, Summit, Central & New Cross, Abbey Hill and Carsic wards. None of these LSOAs has a significant problem with lack of broadband connectivity.
+* These are areas where people may not be easily able to buy, repair or replace devices due to cost, and/or may not be able to afford a mobile data allowance or a decent broadband connection.
+* Areas with poorer broadband availability are represented by the circles: these are scattered throughout the district but with particular clusters in Larwood, Annesley & Kirkby Woodhouse and Stanton Hill & Teversal wards.
 
-These are areas where people may not be easily able to buy, repair or replace devices due to cost, may not have a mobile data allowance, or be able to afford a decent broadband connection.
 
-Areas with poorer broadband availability are represented by the circles: these are scattered throughout the district but with particular clusters in Larwood, Annesley & Kirkby Woodhouse and Stanton Hill & Teversal wards.
+### **Overall wards heatmap.** Data from LSOA level is combined to ward level via an algorithm, and then weighted according to the relative importance of different factors (age, income, connectivity...) in digital exclusion to produce overall digital exclusion risk scores for each ward.
+
+
+```{r ward_heatmap}
+
+median_risk <- readr::read_csv(here("ward_heatmap_numbers.csv")) %>% 
+  select(wd19nm = Ward, de_risk = `Weighted DE Risk`, digino = `DigiNo postcodes`) %>% 
+  pull(de_risk) %>% 
+  median()
+
+
+heatmap <- readr::read_csv(here("ward_heatmap_numbers.csv")) %>% 
+  select(wd19nm = Ward, de_risk = `Weighted DE Risk`, digino = `DigiNo postcodes`) %>% 
+  left_join(ward_boundaries, .) %>% 
+  select(wd19nm, de_risk, digino) %>% 
+  tm_shape(name = "Ward heatmap") +
+    tm_polygons(title = "Digital Exclusion risk",
+                col = "de_risk",
+                alpha = 0.7,
+                border.col = "grey50",
+                border.alpha = 0.1,
+                lwd = 2,
+                palette = "-RdYlGn",
+                style = "cont",
+                midpoint = median_risk,
+                popup.vars = c("Ward" = "wd19nm",
+                               "DE Risk" = "de_risk",
+                               "DigiNo postcodes" = "digino")
+                ) +
+  
+  tm_shape(district_boundary, name = "District boundary") +
+    tm_borders(col = "grey20", lwd = 4, alpha = 0.3) +
+  
+  tm_shape(community_sf, name = "Community assets") +
+    tm_markers(shape = star_icon, popup.vars = "type") +
+  
+  tm_shape(filter(digitypes_sf, digi_type == "DigiNo"), name = "DigiNo postcodes") +
+    tm_symbols(col = "white",
+               border.col = "grey20",
+               border.lwd = 2,
+               size = 0.1,
+               shape = 21,
+               alpha = 0.7,
+               popup.vars = FALSE)
+  
+tmap_leaflet(heatmap) %>% 
+  leaflet::hideGroup(c("Community assets", "DigiNo postcodes"))
+
+
+```
+
+***
+
+* This map illustrates the *relative*, overall digital exclusion risk at ward level in Ashfield. Within the highest-ranked wards (shaded red and orange), populations in all areas are not at equal risk - there will still be significant variation within wards in terms of risk and in terms of people's ability to access support provided locally. Leamington ward is an example where digital exclusion risk factors are much more concentrated in some LSOAs than in others.
+* Likewise, wards that are not ranked as high-risk overall will still have numbers of people who are digitally excluded. These residents may be spread around the area or found in more concentrated pockets. An example of this is Abbey Hill ward, where some parts are at high risk even though the ward as a whole is at moderate risk.
+* The community assets layer shows which areas are best served by local services and potential community support venues, and where there are gaps.
+* The Ashfield District Council DigiTypes classification has been used here as an overlay. Those postcodes categorised as "DigiNo" - with residents least likely to access services digitally - are shown as white dots. The spread of these postcodes across the district emphasises the point that digitally excluded residents are found in all areas, not just in the urban "hotspots".
