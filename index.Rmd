@@ -113,7 +113,7 @@ When the map of community assets is overlaid, we can see that these areas are al
 Being more urban, these areas have community centres and potential support venues not too far away, but very few actually in the highest-risk LSOAs themselves.
 
 
-### **Disability and digital exclusion.** Disabled people are much less likely to be online than non-disabled people. We estimate the disabled population in an area by using claimant numbers for three disability-related benefits (DLA, ESA, PIP). Layers may be turned on and off using the layers tool at the top left.
+### **Disability and digital exclusion.** Disabled people are much less likely to be online than non-disabled people. The map shows claimant numbers for three disability-related benefits (DLA, ESA, PIP). Layers may be turned on and off using the layers tool (top left).
 
 
 ```{r disability_tmap}
@@ -178,7 +178,7 @@ Those LSOAs in Ashfield within the 10% most deprived in this index are highlight
 
 
 
-### **Low income and digital exclusion.** This map shows the number of Housing Benefit and Universal Credit claimants for each LSOA, as a rough measure of income deprivation. Data from Ofcom showing postcodes where some or all premises cannot access Superfast broadband is overlaid, where a larger dot represents a higher % of premises affected in each postcode. Layers may be turned on and off using the layers tool at the top left.
+### **Low income and digital exclusion.** This map shows the number of Housing Benefit and Universal Credit claimants for each LSOA, as a measure of low income. Connectivity data is available as an overlay. Layers may be turned on and off using the layers tool (top left).
 
 
 ```{r income_tmap}
@@ -229,9 +229,12 @@ tmap_leaflet(incom_map) %>%
 
 ***
 
+* Data from [Ofcom][ofcom] showing postcodes where some or all premises cannot access Superfast broadband is available as an overlay. Larger dots represent higher %s of premises affected in each postcode.
 * The highest numbers of people on lower incomes, as represented by HB and UC claims, are found within areas of Leamington, Summit, Central & New Cross, Abbey Hill and Carsic wards. None of these LSOAs has a significant problem with lack of broadband connectivity.
 * These are areas where people may not be easily able to buy, repair or replace devices due to cost, and/or may not be able to afford a mobile data allowance or a decent broadband connection.
 * Areas with poorer broadband availability are represented by the circles: these are scattered throughout the district but with particular clusters in Larwood, Annesley & Kirkby Woodhouse and Stanton Hill & Teversal wards.
+
+[ofcom]: https://www.ofcom.org.uk/research-and-data/multi-sector-research/infrastructure-research/connected-nations-2019/data-downloads
 
 
 ### **Overall wards heatmap.** Data from LSOA level is combined to ward level via an algorithm, and then weighted according to the relative importance of different factors (age, income, connectivity...) in digital exclusion to produce overall digital exclusion risk scores for each ward.

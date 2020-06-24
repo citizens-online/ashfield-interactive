@@ -47,3 +47,7 @@ th, td {
   font-size: 20px;
   font-weight: 700;
 }
+
+.storyboard-nav .sbframelist {
+  height: 160px;
+}
