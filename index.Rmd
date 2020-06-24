@@ -242,9 +242,9 @@ tmap_leaflet(incom_map) %>%
 
 ***
 
-* Data from [Ofcom][ofcom] showing postcodes where some or all premises cannot access Superfast broadband is available as an overlay. Larger dots represent higher %s of premises affected in each postcode.
-* The highest numbers of people on lower incomes, as represented by HB and UC claims, are found within areas of **Leamington**, **Summit**, **Central & New Cross**, **Abbey Hill** and **Carsic** wards. None of these LSOAs has a significant problem with lack of broadband connectivity.
-* These are areas where people may not be easily able to buy, repair or replace devices due to cost, and/or may not be able to afford a mobile data allowance or a decent broadband connection.
+* Data from [Ofcom][ofcom] showing postcodes where some or all premises cannot access Superfast broadband is available as an overlay. Larger dots represent higher proportions of premises affected in each postcode.
+* The highest numbers of people on lower incomes, as represented by HB and UC claims, are found within parts of **Leamington**, **Summit**, **Central & New Cross**, **Abbey Hill** and **Carsic** wards. None of these LSOAs has a significant problem with lack of broadband connectivity.
+* These are areas where residents may be less likely to be able to buy, repair or replace devices due to cost, and/or may not be able to afford a mobile data allowance or a decent broadband connection.
 * Areas with poorer broadband availability are represented by the circles: these are scattered throughout the district but with particular clusters in **Larwood**, **Annesley & Kirkby Woodhouse** and **Stanton Hill & Teversal** wards.
 * Sources:
   * [Ofcom Connected Nations 2019][ofcom]
