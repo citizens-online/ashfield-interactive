@@ -40,8 +40,11 @@ th, td {
   background-color: #fcfcff;
 }
 
-.navbar-inverse {
-    background-color: #164194; // co-blue
+.navbar-inverse,
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-brand:focus {
+  color: white;
+  background-color: #164194; /* co-blue */
 }
 .navbar-brand {
   font-size: 20px;
