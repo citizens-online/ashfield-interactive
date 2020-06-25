@@ -37,6 +37,7 @@ tmap_options(basemaps = leaflet::providers$CartoDB.Positron,
 
 ```
 
+
 ### **Age and digital exclusion.** Digital exclusion risk is particularly acute where older people are living alone and/or are poorer. Specific numbers can be seen in a pop-up when you click on an area. Layers may be turned on and off using the layers tool at the top left.
 
 
@@ -65,7 +66,7 @@ age_map <- tm_shape(full_data_age, name = "Age by LSOA (%)") +
                              "% adult popn. aged 65+" = "over65_pct",
                              "Popn. aged 65+" = "over65_population",
                              "Older people living alone" = "one_person_household_aged_65_and_over",
-                             "Pension Credit claim hotspots" = "pc_aug_19")
+                             "Pension Credit claims" = "pc_aug_19")
               ) +
   
   tm_shape(full_data_age, name = "Older people living alone") +
@@ -81,7 +82,7 @@ age_map <- tm_shape(full_data_age, name = "Age by LSOA (%)") +
                              "% adult popn. aged 65+" = "over65_pct",
                              "Popn. aged 65+" = "over65_population",
                              "Older people living alone" = "one_person_household_aged_65_and_over",
-                             "Pension Credit claim hotspots" = "pc_aug_19")
+                             "Pension Credit claims" = "pc_aug_19")
                 ) +
   
   tm_shape(dplyr::slice_max(full_data_age, order_by = pc_aug_19, n = 5), name = "Pension Credit claims") +
@@ -91,7 +92,7 @@ age_map <- tm_shape(full_data_age, name = "Age by LSOA (%)") +
     tm_borders(col = "lawngreen", lwd = 4, alpha = 0.5) +
   
   tm_shape(select(ward_boundaries, wd19nm), name = "Ward boundaries") +
-    tm_borders(col = "gold1", lwd = 2, alpha = 0.2) +
+    tm_borders(col = "gold1", lwd = 2, alpha = 0.5) +
 
   tm_shape(community_sf, name = "Community assets") +
     tm_markers(shape = star_icon, popup.vars = "type")
@@ -123,7 +124,7 @@ Being more urban, these areas have community centres and potential support venue
 [ons_geog]: https://geoportal.statistics.gov.uk/
 
 
-### **Disability and digital exclusion.** Disabled people are much less likely to be online than non-disabled people. The map shows claimant numbers for three disability-related benefits (DLA, ESA, PIP). Layers may be turned on and off using the layers tool (top left).
+### **Disability and digital exclusion.** Disabled people are much less likely to be online than non-disabled people. The map shows claimant numbers for three disability-related benefits (DLA, ESA, PIP).
 
 
 ```{r disability_tmap}
@@ -160,7 +161,7 @@ disab_map <- tm_shape(full_data_dis, name = "Disability prevalence (% popn) (app
     tm_borders(col = "lawngreen", lwd = 4, alpha = 0.5) +
   
   tm_shape(select(ward_boundaries, wd19nm), name = "Ward boundaries") +
-    tm_borders(col = "gold1", lwd = 2, alpha = 0.2) +
+    tm_borders(col = "gold1", lwd = 2, alpha = 0.5) +
 
   tm_shape(community_sf, name = "Community assets") +
     tm_markers(shape = star_icon, popup.vars = "type")
@@ -227,7 +228,7 @@ incom_map <- tm_shape(full_data_inc, name = "Income deprivation prevalence (% ad
     tm_borders(col = "lawngreen", lwd = 4, alpha = 0.5) +
   
   tm_shape(select(ward_boundaries, wd19nm), name = "Ward boundaries") +
-    tm_borders(col = "gold1", lwd = 2, alpha = 0.2) +
+    tm_borders(col = "gold1", lwd = 2, alpha = 0.5) +
 
   tm_shape(community_sf, name = "Community assets") +
     tm_markers(shape = star_icon, popup.vars = "type") +
@@ -318,3 +319,4 @@ tmap_leaflet(heatmap) %>%
   * Ashfield District Council DigiTypes research
   * [ONS Postcode Directory][ons_pc]
   * [ONS OpenGeography][ons_geog]
+
